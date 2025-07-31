@@ -1,0 +1,10 @@
+streamlit
+pandas
+plotly
+prophet
+langchain
+langchain-community
+langchain-core
+langchain-experimental
+langchain-anthropic
+python-dotenv
