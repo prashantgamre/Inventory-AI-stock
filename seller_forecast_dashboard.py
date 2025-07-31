@@ -15,13 +15,18 @@ from prophet import Prophet
 
 load_dotenv()
 
+# Title and API Key Input
+st.set_page_config(page_title="Seller Forecast Dashboard", layout="wide")
+st.title("📊 Forecast Dashboard for Seller")
 
-# # Title and login
-# st.set_page_config(page_title="Seller Forecast Dashboard", layout="wide")
-# seller_name = st.text_input("Enter Seller Name or Email")
-# if not seller_name:
-#     st.stop()
-st.title(f"📊 Forecast Dashboard for Seller")
+# API Key Input
+api_key = st.sidebar.text_input("🔑 Enter Anthropic API Key", type="password")
+if not api_key:
+    st.warning("Please enter your Anthropic API key in the sidebar to enable AI features.")
+    st.stop()
+
+# Set the API key in environment
+os.environ["ANTHROPIC_API_KEY"] = api_key
 
 # Upload CSV
 data_file = st.file_uploader("Upload 5-Year Sales CSV (2020–2024)", type=["csv"])
@@ -98,19 +103,22 @@ for product in selected_products:
     forecast_results.append(forecast_summary)
 
     
-model = ChatAnthropic(model="claude-3-5-sonnet-20241022", temperature=0.5)
-
-
-
-agent = create_pandas_dataframe_agent(
-    model, 
-    df=filtered_df, 
-    verbose=True, 
-    allow_dangerous_code=True,
-    handle_parsing_errors=True,  # Add error handling
-    max_iterations=10,  # Prevent infinite loops
-    return_intermediate_steps=True  # For better debugging
-)
+# Initialize the model with error handling
+try:
+    model = ChatAnthropic(model="claude-3-5-sonnet-20241022", temperature=0.5)
+    
+    agent = create_pandas_dataframe_agent(
+        model, 
+        df=filtered_df, 
+        verbose=True, 
+        allow_dangerous_code=True,
+        handle_parsing_errors=True,
+        max_iterations=10,
+        return_intermediate_steps=True
+    )
+except Exception as e:
+    st.error(f"Error initializing the AI model: {str(e)}")
+    st.stop()
 
 CSV_PROMPT_PREFIX = """
 First set the pandas display options to show all rows and columns,
