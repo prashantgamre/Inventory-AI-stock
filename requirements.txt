@@ -8,3 +8,4 @@ langchain-core
 langchain-experimental
 langchain-anthropic
 python-dotenv
+scikit-learn
