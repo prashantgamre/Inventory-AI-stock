@@ -15,8 +15,11 @@ from prophet import Prophet
 
 load_dotenv()
 
+
+st.logo(image="cropped-Vauch-Info-Logo-1-1-300x194.png", size="large", link="https://www.vauchinfotech.com", icon_image="images.png")
+
 # Title and API Key Input
-st.set_page_config(page_title="Seller Forecast Dashboard", layout="wide")
+st.set_page_config(page_title="VAUCH Info Tech",page_icon="cropped-Vauch-Info-Logo-1-1-300x194.png", layout="wide")
 st.title("📊 Forecast Dashboard for Seller")
 
 # API Key Input
@@ -179,3 +182,4 @@ with st.sidebar:
     forecast_df['Month'] = forecast_df['Month'].dt.strftime('%Y-%m')
     st.dataframe(forecast_df)
     st.download_button("⬇️ Download Forecast CSV", forecast_df.to_csv(index=False), file_name="forecast_summary.csv", mime="text/csv")
+
