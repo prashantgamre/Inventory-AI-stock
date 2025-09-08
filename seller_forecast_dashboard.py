@@ -20,7 +20,7 @@ st.logo(image="cropped-Vauch-Info-Logo-1-1-300x194.png", size="large", link="htt
 
 # Title and API Key Input
 st.set_page_config(page_title="VAUCH Info Tech",page_icon="cropped-Vauch-Info-Logo-1-1-300x194.png", layout="wide")
-st.title("📊 Forecast Dashboard for Seller")
+st.title("📊 Chat with Your Data – AI Forecast Dashboard")
 
 # API Key Input
 api_key = st.sidebar.text_input("🔑 Enter Anthropic API Key", type="password")
@@ -182,5 +182,6 @@ with st.sidebar:
     forecast_df['Month'] = forecast_df['Month'].dt.strftime('%Y-%m')
     st.dataframe(forecast_df)
     st.download_button("⬇️ Download Forecast CSV", forecast_df.to_csv(index=False), file_name="forecast_summary.csv", mime="text/csv")
+
 
 
